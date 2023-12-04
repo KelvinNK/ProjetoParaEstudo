@@ -16,6 +16,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LolDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LolDB")));
+//Comando migrations, como o DataContext está em um projeto separado é necessário apontar para o csproj do projeto onde o appSettings se encontra, utilize -s.
+//A partir da pasta ProjetoParaEstudo.Domain
+//dotnet ef migrations add InitialCreation -s ..\ProjetoParaEstudo\ProjetoParaEstudo.csproj
+//dotnet ef database update -s ..\ProjetoParaEstudo\ProjetoParaEstudo.csproj
+
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.Load("ProjetoParaEstudo.Domain")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.Load("ProjetoParaEstudo.Domain"));
 
